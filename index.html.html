@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise for You ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #ffe6e6, #ffb3b3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: fadeIn 1s ease-in;
+        }
+        h2 { color: #d63031; margin-bottom: 20px; font-size: 24px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ffb3b3;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
+        }
+        input:focus { border-color: #d63031; }
+        button {
+            background: #d63031;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: 0.3s;
+        }
+        button:hover { background: #b2bec3; color: #d63031; }
+        .error { color: red; margin-top: 10px; font-size: 14px; display: none; }
+        
+        /* Surprise Content Styles */
+        #surpriseScreen { display: none; }
+        .wifes-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ffb3b3;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .love-message {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #4a4a4a;
+            margin-bottom: 15px;
+        }
+        .heart { color: #d63031; font-size: 30px; animation: beat 1s infinite alternate; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes beat { from { transform: scale(1); } to { transform: scale(1.1); } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- लॉगिन स्क्रीन -->
+        <div id="loginScreen">
+            <h2>🔐 Only For You</h2>
+            <p style="color: #666; margin-bottom: 15px;">आगे बढ़ने के लिए अपनी डिटेल्स डालें:</p>
+            <input type="text" id="username" placeholder="यूज़रनेम (जैसे: MyWife)">
+            <input type="password" id="password" placeholder="पासवर्ड">
+            <button onclick="checkCredentials()">ओपन करें ❤️</button>
+            <p id="errorMessage" class="error">अरे! यूज़रनेम या पासवर्ड सही नहीं है। 🙈</p>
+        </div>
+
+        <!-- सरप्राइज स्क्रीन (शुरू में छुपी रहेगी) -->
+        <div id="surpriseScreen">
+            <div class="heart">❤️</div>
+            <h2>I Love You!</h2>
+            
+            <!-- यहाँ अपनी वाइफ की फोटो का नाम डालें -->
+            <img src="wife.jpg.jpeg" alt="My Beautiful Wife" class="wifes-photo">
+            
+            <!-- यहाँ अपना बढ़िया सा मैसेज लिखें -->
+            <p class="love-message">
+                "आप मेरी जिंदगी की सबसे खूबसूरत सच्चाई हो। हर दिन आपके साथ होना एक आशीर्वाद जैसा है। हमेशा मुस्कुराती रहिए! 💖"
+            </p>
+            
+            <div class="heart" style="font-size: 20px;">✨✨✨</div>
+        </div>
+    </div>
+
+    <script>
+        function checkCredentials() {
+            var user = document.getElementById("username").value;
+            var pass = document.getElementById("password").value;
+            var errorMsg = document.getElementById("errorMessage");
+
+            // यहाँ आप अपना मनपसंद ID और Password सेट कर सकते हैं
+            if (user === "love" && pass === "12345") {
+                document.getElementById("loginScreen").style.display = "none";
+                document.getElementById("surpriseScreen").style.display = "block";
+            } else {
+                errorMsg.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
