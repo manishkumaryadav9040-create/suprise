@@ -18,9 +18,10 @@
             align-items: center;
             min-height: 100vh;
             color: #333;
+            overflow: hidden; /* दिल स्क्रीन से बाहर न जाएं */
         }
         .container {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -28,6 +29,8 @@
             max-width: 400px;
             width: 90%;
             animation: fadeIn 1s ease-in;
+            z-index: 10; /* ताकि दिल कार्ड के पीछे गिरें और डिस्टर्ब न करें */
+            position: relative;
         }
         h2 { color: #d63031; margin-bottom: 20px; font-size: 24px; }
         input {
@@ -51,6 +54,7 @@
             cursor: pointer;
             margin-top: 10px;
             width: 100%;
+            font-weight: bold;
             transition: 0.3s;
         }
         button:hover { background: #b2bec3; color: #d63031; }
@@ -72,8 +76,26 @@
             line-height: 1.6;
             color: #4a4a4a;
             margin-bottom: 15px;
+            font-weight: 500;
         }
         .heart { color: #d63031; font-size: 30px; animation: beat 1s infinite alternate; }
+        
+        /* Falling Hearts Animation Styles */
+        .falling-heart {
+            position: fixed;
+            top: -10vh;
+            font-size: 20px;
+            color: #d63031;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) translateX(80px) rotate(360deg);
+                opacity: 0;
+            }
+        }
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes beat { from { transform: scale(1); } to { transform: scale(1.1); } }
@@ -82,27 +104,23 @@
 <body>
 
     <div class="container">
-        <!-- लॉगिन स्क्रीन -->
         <div id="loginScreen">
             <h2>🔐 Only For You</h2>
             <p style="color: #666; margin-bottom: 15px;">आगे बढ़ने के लिए अपनी डिटेल्स डालें:</p>
-            <input type="text" id="username" placeholder="यूज़रनेम (जैसे: MyWife)">
+            <input type="text" id="username" placeholder="यूज़रनेम (जैसे: love)">
             <input type="password" id="password" placeholder="पासवर्ड">
             <button onclick="checkCredentials()">ओपन करें ❤️</button>
             <p id="errorMessage" class="error">अरे! यूज़रनेम या पासवर्ड सही नहीं है। 🙈</p>
         </div>
 
-        <!-- सरप्राइज स्क्रीन (शुरू में छुपी रहेगी) -->
         <div id="surpriseScreen">
             <div class="heart">❤️</div>
             <h2>I Love You!</h2>
             
-            <!-- यहाँ अपनी वाइफ की फोटो का नाम डालें -->
             <img src="wife.jpg" alt="My Beautiful Wife" class="wifes-photo">
             
-            <!-- यहाँ अपना बढ़िया सा मैसेज लिखें -->
             <p class="love-message">
-                "आप मेरी जिंदगी की सबसे खूबसूरत सच्चाई हो। हर दिन आपके साथ होना एक आशीर्वाद जैसा है। हमेशा मुस्कुराती रहिए! 💖"
+      "लोग कहते हैं शादी के बाद इंसान की आजादी छिन जाती है... सही कहते हैं! पर आपके जैसी प्यारी 'जेलर' मिले तो उम्रकैद भी मंजूर है। थैंक यू मेरी लाइफ को इतना खूबसूरत (और कभी-कभी मजेदार) बनाने के लिए! 🔐💞"
             </p>
             
             <div class="heart" style="font-size: 20px;">✨✨✨</div>
@@ -115,13 +133,32 @@
             var pass = document.getElementById("password").value;
             var errorMsg = document.getElementById("errorMessage");
 
-            // यहाँ आप अपना मनपसंद ID और Password सेट कर सकते हैं
-            if (user === "love" && pass === "12345") {
+            // 🔐 बदलाव 2: यहाँ अपना यूज़रनेम और पासवर्ड बदलें
+            // अभी यूज़रनेम "love" है और पासवर्ड "12345" है। आप "12345" की जगह कुछ भी लिख सकते हैं।
+            if (user === "soni" && pass === "12345") {
                 document.getElementById("loginScreen").style.display = "none";
                 document.getElementById("surpriseScreen").style.display = "block";
+                
+                // ❤️ बदलाव 3: लॉगिन होते ही दिलों की बारिश शुरू करने का फंक्शन
+                setInterval(createHeart, 300);
             } else {
                 errorMsg.style.display = "block";
             }
+        }
+
+        // दिलों की बारिश का जादुई कोड
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('falling-heart');
+            heart.innerHTML = '❤️'; // आप चाहें तो यहाँ 💖 या 💕 भी डाल सकते हैं
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // गिरने की स्पीड
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px'; // दिलों का साइज
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+            
+            // स्क्रीन से नीचे जाने के बाद दिल डिलीट हो जाएंगे
+            setTimeout(() => { heart.remove(); }, 5000);
         }
     </script>
 </body>
